@@ -31,7 +31,13 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyReadonly<T> = any
+// T must at least be an object
+// for each property in T
+// make property readonly
+// (but not deep readonly)
+type MyReadonly<T extends {}> = {
+  readonly [P in keyof T]: T[P]
+}
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
