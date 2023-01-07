@@ -22,10 +22,19 @@
 
 /* _____________ Your Code Here _____________ */
 
-type First<T extends any[]> = any
+// input T must be at least an array of anys
+// if T is empty return never else return idx 0
+type First<T extends any[]> = T extends [] ? never : T[0]
+// opposite.. if first element exists
+// type First<T extends any[]> = T extends [infer First, ...infer _] ? First : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
+
+type f1 = First<[3, 2, 1]> // 3>>,
+type f2 = First<[() => 123, { a: string }]> // () => 123>>,
+type f3 = First<[]> // never>>,
+type f4 = First<[undefined]> // undefined>>,
 
 type cases = [
   Expect<Equal<First<[3, 2, 1]>, 3>>,

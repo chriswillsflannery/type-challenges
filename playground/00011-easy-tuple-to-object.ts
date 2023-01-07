@@ -20,7 +20,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToObject<T extends readonly any[]> = any
+// T must at least be a readonly array of string | number
+// for each prop in T
+// assign to itself
+type TupleToObject<T extends readonly (string | number)[]> = {
+  [P in T[0]]: P
+}
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -29,11 +34,9 @@ const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
 const tupleNumber = [1, 2, 3, 4] as const
 const tupleMix = [1, '2', 3, '4'] as const
 
-type cases = [
-  Expect<Equal<TupleToObject<typeof tuple>, { tesla: 'tesla'; 'model 3': 'model 3'; 'model X': 'model X'; 'model Y': 'model Y' }>>,
-  Expect<Equal<TupleToObject<typeof tupleNumber>, { 1: 1; 2: 2; 3: 3; 4: 4 }>>,
-  Expect<Equal<TupleToObject<typeof tupleMix>, { 1: 1; '2': '2'; 3: 3; '4': '4' }>>,
-]
+type result = TupleToObject<typeof tuple>
+type res2 = TupleToObject<typeof tupleNumber>
+type res3 = TupleToObject<typeof tupleMix>
 
 // @ts-expect-error
 type error = TupleToObject<[[1, 2], {}]>

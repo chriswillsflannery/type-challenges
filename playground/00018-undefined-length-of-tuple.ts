@@ -22,13 +22,18 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Length<T> = any
+// T must be at least readonly array of anys
+// return length of T
+type Length<T extends readonly any[]> = T['length']
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
 const tesla = ['tesla', 'model 3', 'model X', 'model Y'] as const
 const spaceX = ['FALCON 9', 'FALCON HEAVY', 'DRAGON', 'STARSHIP', 'HUMAN SPACEFLIGHT'] as const
+
+type l1 = Length<typeof tesla> // 4
+type l2 = Length<typeof spaceX> // 5
 
 type cases = [
   Expect<Equal<Length<typeof tesla>, 4>>,
