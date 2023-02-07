@@ -35,8 +35,8 @@
 type MyAwaited<T extends PromiseLike<any>> =
   T extends PromiseLike<infer U>
   ? U extends PromiseLike<unknown>
-    ? MyAwaited<U>
-    : U
+  ? MyAwaited<U>
+  : U
   : T
 
 /* _____________ Test Cases _____________ */
@@ -69,3 +69,5 @@ type error = MyAwaited<number>
   > View solutions: https://tsch.js.org/189/solutions
   > More Challenges: https://tsch.js.org
 */
+
+const letters = ["a", "b", "a"]
