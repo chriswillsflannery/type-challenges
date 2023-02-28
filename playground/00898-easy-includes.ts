@@ -18,7 +18,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Includes<T extends readonly any[], U> = any
+type Includes<T extends unknown[], U> =
+  T extends [infer Head, ...infer Tail]
+  ? Equal<Head, U> extends true
+    ? true
+    : Includes<Tail, U>
+  : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
